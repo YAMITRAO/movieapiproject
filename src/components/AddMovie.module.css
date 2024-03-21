@@ -1,0 +1,30 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 5px dashed goldenrod;
+    margin-bottom: 20px;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    /* */
+}
+
+.inputContainer > label {
+    font-family: monospace;
+    font-size: 22px;
+    margin: 5px 0px;
+    text-align: left;
+}
+
+.inputContainer > input{
+    font-size: 20px;
+    outline: none;
+    border-radius: 5px;
+    margin:5px 0px;
+}
+
+button{
+    margin: 5px 5px 20px 5px;
+}

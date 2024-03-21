@@ -8,10 +8,10 @@ const MovieList = (props) => {
     <ul className={classes['movies-list']}>
       {props.movies.map((movie) => (
         <Movie
-          key={movie.episode_id}
+          key={movie.id}
           title={movie.title}
-          releaseDate={movie.created}
-          openingText={movie.opening_crawl}
+          releaseDate={movie.releaseDate}
+          text={movie.text}
         />
       ))}
     </ul>

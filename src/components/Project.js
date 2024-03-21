@@ -1,7 +1,8 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MoviesList from './MoviesList';
 import './Project.css';
+import AddMovie from './AddMovie';
 
 
 function Project(props) {
@@ -11,56 +12,52 @@ function Project(props) {
  const [error, setError] = useState(null);
 
 
- useEffect( async () => {
-  setIsLoading(true);
-    setError(null);
 
-    try{
-      const response = await fetch("https://swapi.dev/api/films/");
-      if(!response.ok){
-        throw new Error("Something Went wrong.....Retry")
-      }
-     const data = await response.json();
-     setDummyMovies(data.results);
-    }
-    catch(error){
-      setError(error.message);
-    }
-    setIsLoading(false)
- }, []);
 
-   async function ApiData ( ) {
+ const fetchingMovieData =  useCallback( async ( )=> {
     setIsLoading(true);
     setError(null);
 
     try{
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch("https://moviereactapp-3a393-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json");
       if(!response.ok){
         throw new Error("Something Went wrong.....Retry")
       }
      const data = await response.json();
-     setDummyMovies(data.results);
+     let myData = [];
+     for (let key in data){
+      console.log(data[key])
+      myData.push({
+        id:key,
+        title: data[key].title,
+        text:data[key].text,
+        releaseDate: data[key].releaseDate,
+      })
+     }
+     console.log(myData);
+     setDummyMovies(myData);
 
     }
     catch(error){
         
       setError(error.message);
-        setTimeout( () => {
-          console.log("Calling the api again and again");
-          ApiData();
-          setIsLoading(false)
-        }, 5000);
+        
     }
     setIsLoading(false)
      
-   }
+   }, []);
+
+   useEffect( () => {
+    fetchingMovieData()
+   }, [fetchingMovieData]);
   
 
    
   return (
     <React.Fragment>
       <section>
-        <button onClick={ApiData}>Fetch Movies</button>
+        <AddMovie/>
+        <button onClick={fetchingMovieData}>Fetch Movies</button>
       </section>
       <section>
         {!isLoading && dummyMovies.length > 0 && <MoviesList movies={dummyMovies} />}
