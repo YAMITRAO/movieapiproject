@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import MoviesList from './MoviesList';
 import './Project.css';
 import AddMovie from './AddMovie';
+import { Link } from 'react-router-dom';
+
 
 
 function Project(props) {
@@ -10,9 +12,6 @@ function Project(props) {
  const [dummyMovies, setDummyMovies] = useState([]);
  const[isLoading , setIsLoading] = useState(false);
  const [error, setError] = useState(null);
-
-
-
 
  const fetchingMovieData =  useCallback( async ( )=> {
     setIsLoading(true);
@@ -66,6 +65,11 @@ function Project(props) {
        
         {isLoading && <p>Loading...</p>}
       </section>
+      <section>
+        <Link to={'/aboutus'}>About US</Link>
+      </section>
+      
+      
     </React.Fragment>
   );
 }
